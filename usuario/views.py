@@ -8,13 +8,13 @@ from hashlib import sha256
 
 def login(request):
     if request.session.get('usuario'):
-        return redirect('/app/home/')
+        return redirect('/home/home/')
     status = request.GET.get('status')
     return render(request, 'login.html', {'status': status})
 
 def cadastro(request):
     if request.session.get('usuario'):
-        return redirect('/app/home/')
+        return redirect('/home/home/')
     status = request.GET.get('status')
     return render(request, 'cadastro.html', {'status': status})
 
@@ -22,6 +22,9 @@ def valida_cadastro(request):
     nome = request.POST.get('nome')
     senha = request.POST.get('senha')
     email = request.POST.get('email')
+    endereco = request.POST.get('endereco')
+    idade = request.POST.get('idade')
+    sexo = request.POST.get('sexo')
 
     if len(nome.strip()) == 0 or len(email.strip()) == 0:
         return redirect('/auth/cadastro/?status=1')
@@ -33,7 +36,7 @@ def valida_cadastro(request):
         return redirect('/auth/cadastro/?status=3')
     try:
         senha = sha256(senha.encode()).hexdigest()
-        usuario = Usuario(nome = nome, senha = senha, email = email)
+        usuario = Usuario(nome = nome, senha = senha, email = email, endereco = endereco, idade = idade, sexo = sexo)
         usuario.save()
         return redirect('/auth/cadastro/?status=0')
     except:
@@ -50,7 +53,7 @@ def valida_login(request):
         return redirect('/auth/login/?status=1')
     elif len(usuario) > 0:
         request.session['usuario'] = usuario[0].id
-        return redirect(f'/livro/home/?id_usuario={request.session["usuario"]}')
+        return redirect(f'/home/home/?id_usuario={request.session["usuario"]}')
 
 def sair(request):
     request.session.flush()

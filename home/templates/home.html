@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %} Login {% endblock %}
+
+{% block 'conteudo' %}
+
+
+<div style="margin-right: 10%; margin-top: 80px; margin-left: 10% ">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Sexo</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+        <tr style="background-color: beige">
+            <th  scope="row">{{usuario}}</th>
+            <td>{{usuario.email}}</td>
+            <td>{{usuario.endereco}}</td>
+            <td>{{usuario.idade}}</td>
+            <td>{{usuario.sexo}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+
+{% endblock %}
