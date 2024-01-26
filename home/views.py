@@ -51,12 +51,14 @@ def editar_usuario(request):
         # Receber dados do formulário
         usuario_id = request.POST.get('usuario')
         usuario = Usuario.objects.get(id = usuario_id)
+        senha = request.POST.get('senha')
         email = request.POST.get('email')
 
         # Atualizar dados no banco de dados
 
         usuario.email = request.POST.get('email')
-        usuario.senha = request.POST.get('senha')
+        senha = sha256(senha.encode()).hexdigest()
+        usuario.senha = senha
         usuario.endereco = request.POST.get('endereco')
         usuario.idade = request.POST.get('idade')
         usuario.sexo = request.POST.get('sexo')
